@@ -1,12 +1,12 @@
 
 
 const listaMostri = [
-    {nome: "Cicciolo", vita: {min: 10, max: 20}, attacco: {min: 5, max: 20}, difesa: {min: 3, max: 10}},
-    {nome: "Freddy", vita: {min: 15, max: 35}, attacco: {min: 15, max: 20}, difesa: {min: 15, max: 30}},
-    {nome: "NoSenSe", vita: {min: 20, max: 20}, attacco: {min: 10, max: 20}, difesa: {min: 40, max: 60}},
-    {nome: "Moscow Mule", vita: {min: 50, max: 70}, attacco: {min: 30, max: 40}, difesa: {min: 20, max: 40}},
-    {nome: "SasageyoSasageyo", vita: {min: 100, max: 150}, attacco: {min: 42, max: 52}, difesa: {min: 40, max: 50}},
-    {nome: "Manuel Er Furioso", vita: {min: 200, max: 300}, attacco: {min: 60, max: 90}, difesa: {min: 45, max: 60}},
+    {nome: "Cicciolo", vita: {min: 10, max: 20}, attacco: {min: 5, max: 20}, difesa: {min: 3, max: 10}, perc_fuga: 95},
+    {nome: "Freddy", vita: {min: 15, max: 35}, attacco: {min: 15, max: 20}, difesa: {min: 15, max: 30}, perc_fuga: 80},
+    {nome: "NoSenSe", vita: {min: 20, max: 20}, attacco: {min: 10, max: 20}, difesa: {min: 33, max: 35}, perc_fuga: 50},
+    {nome: "Moscow Mule", vita: {min: 50, max: 70}, attacco: {min: 30, max: 40}, difesa: {min: 30, max: 25}, perc_fuga: 60},
+    {nome: "SasageyoSasageyo", vita: {min: 80, max: 100}, attacco: {min: 42, max: 52}, difesa: {min: 28, max: 35}, perc_fuga: 35},
+    {nome: "Manuel Er Furioso", vita: {min: 100, max: 180}, attacco: {min: 60, max: 90}, difesa: {min: 30, max: 39}, perc_fuga: 5},
 ];
 
 let personaggio = {};
@@ -16,7 +16,7 @@ let mostro = {};
 
 function creazionePersonaggio(){
     const max = 100;
-    const min = 5;
+    const min = 40;
 
     const nome = prompt("Come si chiama il tuo personaggio?");
     let vita = 100;
@@ -52,6 +52,7 @@ function generazioneMostro(){
 
 
 // Gestione turni
+
 
 
 
