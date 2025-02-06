@@ -32,9 +32,9 @@ function creazionePersonaggio(){
         personaggio = {nome, vita, attacco, difesa, n_cure};
     
         console.log(`Il tuo personaggio si chiama: ${personaggio.nome}`)
-        console.log(`Vita: ${personaggio.vita}`)
-        console.log(`Attacco: ${personaggio.attacco}`)
-        console.log(`Difesa: ${personaggio.difesa}`)
+        console.log(`%cVita: ${personaggio.vita}`, "font-style: italic;")
+        console.log(`%cAttacco: ${personaggio.attacco}`, "font-style: italic;")
+        console.log(`%cDifesa: ${personaggio.difesa}`, "font-style: italic;")
         return true;
     }else{
         return false;
@@ -58,9 +58,9 @@ function generazioneMostro(){
     mostro = {nome, vita, attacco, difesa, perc_fuga}
     
     console.warn(`ATTENTO! Hai incontrato un ${mostro.nome}!`)
-    console.log(`Vita: ${mostro.vita}`)
-    console.log(`Attacco: ${mostro.attacco}`)
-    console.log(`Difesa: ${mostro.difesa}`)
+    console.log(`%cVita: ${mostro.vita}`, "font-style: italic;")
+    console.log(`%cAttacco: ${mostro.attacco}`, "font-style: italic;")
+    console.log(`%cDifesa: ${mostro.difesa}`, "font-style: italic;")
 }
 
 
@@ -94,10 +94,10 @@ function attaccoPersonaggio(){
             }
             mostro.vita -= punti;
             if (fineGioco()) return true;;
-            console.log(`Hai ATTACCATO! La vita del nemico si è abbassata a ${mostro.vita}.`);
+            console.log(`%cHai ATTACCATO! La vita del nemico si è abbassata a ${mostro.vita}.`, "color: green;");
         }else if(mossa===2){    // Cura
             if(personaggio.n_cure===0){ // controlla se ho ancora pozioni
-                console.log(`Non hai più pozioni da utilizzare`);
+                console.log(`%cNon hai più pozioni da utilizzare`, "color: yellow");
             }else{
                 personaggio.vita += Math.floor(Math.random() * (Number(personaggio.vita) - 1) + 1);
                 personaggio.n_cure--;
@@ -128,7 +128,7 @@ function attaccoNemico(){
     }
     personaggio.vita -= punti
     if(fineGioco()) return true;
-    console.log(`${mostro.nome} ti ATTACCA! La tua vita si abbassa a ${personaggio.vita}`)
+    console.log(`%c${mostro.nome} ti ATTACCA! La tua vita si abbassa a ${personaggio.vita}`, "color:red;")
 }
 
 
@@ -137,10 +137,10 @@ function attaccoNemico(){
 
 function fineGioco(){
     if(mostro.vita<=0){ // vittoria
-        console.log(`Hai sconfitto ${mostro.nome}, complimenti!`);
+        console.log(`%cHAI SCONFITTO ${mostro.nome}, COMPLIMENTI!`, "font-weight:bold; font-size: 20px");
         return true;
     }else if(personaggio.vita<=0){ // sconfitta
-        console.log(`Sei stato ucciso da ${mostro.nome}. Sfigato.`);
+        console.log(`%cSei stato ucciso da ${mostro.nome}. Sfigato.`, "font-size: 20px");
         return true;
     }
 }
