@@ -19,17 +19,22 @@ function creazionePersonaggio(){
     const min = 40;
 
     const nome = prompt("Come si chiama il tuo personaggio?");
-    let vita = 100;
-    let attacco = Math.floor(Math.random() * (max - min + 1) + min);
-    let difesa = Math.floor(Math.random() * (max - min + 1) + min);
-    let n_cure = 3;
-
-    personaggio = {nome, vita, attacco, difesa, n_cure};
-
-    console.log(`Il tuo personaggio si chiama: ${personaggio.nome}`)
-    console.log(`Vita: ${personaggio.vita}`)
-    console.log(`Attacco: ${personaggio.attacco}`)
-    console.log(`Difesa: ${personaggio.difesa}`)
+    if(nome!=null){
+        let vita = 100;
+        let attacco = Math.floor(Math.random() * (max - min + 1) + min);
+        let difesa = Math.floor(Math.random() * (max - min + 1) + min);
+        let n_cure = 3;
+    
+        personaggio = {nome, vita, attacco, difesa, n_cure};
+    
+        console.log(`Il tuo personaggio si chiama: ${personaggio.nome}`)
+        console.log(`Vita: ${personaggio.vita}`)
+        console.log(`Attacco: ${personaggio.attacco}`)
+        console.log(`Difesa: ${personaggio.difesa}`)
+        return true;
+    }else{
+        return false;
+    }
 }
 
 
@@ -42,8 +47,9 @@ function generazioneMostro(){
     let vita = Math.floor(Math.random() * (listaMostri[index].vita.max - listaMostri[index].vita.min + 1) + listaMostri[index].vita.min);
     let attacco = Math.floor(Math.random() * (listaMostri[index].attacco.max - listaMostri[index].attacco.min + 1) + listaMostri[index].attacco.min);
     let difesa = Math.floor(Math.random() * (listaMostri[index].difesa.max - listaMostri[index].difesa.min + 1) + listaMostri[index].difesa.min);
+    let perc_fuga = listaMostri[index].perc_fuga;
 
-    mostro = {nome, vita, attacco, difesa}
+    mostro = {nome, vita, attacco, difesa, perc_fuga}
     
     console.warn(`ATTENTO! Hai incontrato un ${mostro.nome}!`)
     console.log(`Vita: ${mostro.vita}`)
@@ -59,18 +65,18 @@ function gioco(){
     while(true){
         let mossa = Number(prompt("Cosa vuoi fare?\n 1. attacco\n 2. cura\n 3. fuggi"))
     
-        if(isNaN(mossa)){
+        if(isNaN(mossa)){   // Controlla se è un numero
             console.error("Valore inserito non valido")
             break;
         }else{
-            console.log(mossa)
-            if(mossa===1){
-                mostro.vita = mostro.vita-(personaggio.attacco-mostro.difesa)
-                console.log(`Hai ATTACCATO! La vita del nemico si è abbassata a ${mostro.vita}.`)
-            }else if(mossa===2){
+            if(mossa===1){  // Attacco
+                mostro.vita = mostro.vita-(personaggio.attacco-mostro.difesa);
+                console.log(`Hai ATTACCATO! La vita del nemico si è abbassata a ${mostro.vita}.`);
+                if (fineGioco()) break;
+            }else if(mossa===2){    // Cura
                 personaggio.vita += Math.floor(Math.random() * (Number(personaggio.vita) - 1) + 1);
                 console.log(`Hai usato una POZIONE! La tua vita si è alzata a ${personaggio.vita}.`)
-            }else if(mossa===3){
+            }else if(mossa===3){    // Fuga
                 let num = Math.floor(Math.random() * 100);
                 if(num<=mostro.perc_fuga){
                     console.log("Sei fuggito! Scampato pericolo...");
@@ -78,20 +84,23 @@ function gioco(){
                 }else{
                     console.log("Non puoi scappare!");
                 }
+            }else{
+                break;
             }
         }
 
-        attaccoNemico()
-        break;
+        attaccoNemico();
+        if (fineGioco()) break;
     }
 
 
 }
 
+// Funzione attacco del mostro
 
 function attaccoNemico(){
     let punti;
-    if(mostro.attacco<personaggio.difesa){
+    if(mostro.attacco<personaggio.difesa){  // toglie solo un punto se la mia difesa è più alta dell'attacco del mostro
         punti = 1;
     }else{
         punti = mostro.attacco-personaggio.difesa
@@ -104,11 +113,22 @@ function attaccoNemico(){
 
 // Gestione fine gioco
 
-
+function fineGioco(){
+    if(mostro.vita===0){
+        console.log(`Hai sconfitto ${mostro.nome}, complimenti!`);
+        return true;
+    }else if(personaggio.vita===0){
+        console.log(`Sei stato ucciso da ${mostro.nome}. Sfigato.`);
+        return true;
+    }
+}
 
 
 // Avvio
 
-creazionePersonaggio()
-generazioneMostro()
-gioco()
+if(!creazionePersonaggio()){
+    console.log("Sei uscito dal gioco")
+}else{
+    generazioneMostro()
+    gioco()
+}
