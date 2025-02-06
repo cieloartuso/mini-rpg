@@ -22,8 +22,9 @@ function creazionePersonaggio(){
     let vita = 100;
     let attacco = Math.floor(Math.random() * (max - min + 1) + min);
     let difesa = Math.floor(Math.random() * (max - min + 1) + min);
+    let n_cure = 3;
 
-    personaggio = {nome, vita, attacco, difesa};
+    personaggio = {nome, vita, attacco, difesa, n_cure};
 
     console.log(`Il tuo personaggio si chiama: ${personaggio.nome}`)
     console.log(`Vita: ${personaggio.vita}`)
@@ -51,8 +52,53 @@ function generazioneMostro(){
 }
 
 
+
 // Gestione turni
 
+function gioco(){
+    while(true){
+        let mossa = Number(prompt("Cosa vuoi fare?\n 1. attacco\n 2. cura\n 3. fuggi"))
+    
+        if(isNaN(mossa)){
+            console.error("Valore inserito non valido")
+            break;
+        }else{
+            console.log(mossa)
+            if(mossa===1){
+                mostro.vita = mostro.vita-(personaggio.attacco-mostro.difesa)
+                console.log(`Hai ATTACCATO! La vita del nemico si è abbassata a ${mostro.vita}.`)
+            }else if(mossa===2){
+                personaggio.vita += Math.floor(Math.random() * (Number(personaggio.vita) - 1) + 1);
+                console.log(`Hai usato una POZIONE! La tua vita si è alzata a ${personaggio.vita}.`)
+            }else if(mossa===3){
+                let num = Math.floor(Math.random() * 100);
+                if(num<=mostro.perc_fuga){
+                    console.log("Sei fuggito! Scampato pericolo...");
+                    break;
+                }else{
+                    console.log("Non puoi scappare!");
+                }
+            }
+        }
+
+        attaccoNemico()
+        break;
+    }
+
+
+}
+
+
+function attaccoNemico(){
+    let punti;
+    if(mostro.attacco<personaggio.difesa){
+        punti = 1;
+    }else{
+        punti = mostro.attacco-personaggio.difesa
+    }
+    personaggio.vita -= punti
+    console.log(`${mostro.nome} ti ATTACCA! La tua vita si abbassa a ${personaggio.vita}`)
+}
 
 
 
@@ -65,3 +111,4 @@ function generazioneMostro(){
 
 creazionePersonaggio()
 generazioneMostro()
+gioco()
